@@ -17,7 +17,7 @@ router.post("/create", (req, res, next) => {
     res.send("creating video")
 })
 
-router.delete("/deleting video", (req, res, next) => {
+router.delete("/delete", (req, res, next) => {
     res.send("deleting video")
 })
 
