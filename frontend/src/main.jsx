@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import {
   createBrowserRouter,
-  Outlet,
   RouterProvider,
 } from "react-router-dom";
 import './index.css'
-import Root from './pages/Root';
+import Root from './pages/Root.jsx';
+import Login from './pages/Login.jsx';
 
 
 const router = createBrowserRouter([
@@ -17,11 +16,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/login",
-        element: <div>loggin ye in</div>
+        element: <Login />
       },
       {
         path: "/signup",
         element: <div>signing you up</div>
+      },
+      {
+        path: "",
+        element: <div>saucey hgome page</div>
       }
     ]
   },
