@@ -8,6 +8,10 @@ app.get("/", (req, res) => {
     res.send("hello");
 });
 
+app.use("/auth", authModule)
+app.use("/resources", resourceModule)
+
+
 app.listen(PORT, () => {
     console.log(`backend online at http://localhost:${PORT}`)
 })
