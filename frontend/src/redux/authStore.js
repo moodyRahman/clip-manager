@@ -23,9 +23,15 @@ export const authSlice = createSlice({
             state.username = action.payload
             state.confirmed = true
             state.isLoggedIn = true
+        },
+        logout: (state, action) => {
+            state.username = ""
+            state.confirmed = ""
+            state.isLoggedIn = false
+            state.verification = "unverified"
         }
     },
 })
 
-export const { successConfirm, successLogin, successRegister } = authSlice.actions
+export const { successConfirm, successLogin, successRegister, logout } = authSlice.actions
 export default authSlice.reducer

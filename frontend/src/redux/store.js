@@ -10,12 +10,14 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     // auth: persistReducer(persistConfig, authReducer)
-    auth: authReducer
+    auth: persistReducer(persistConfig, authReducer)
 })
 
 const store = configureStore({
     reducer: rootReducer
 })
 
+const persistor = persistStore(store)
 
-export { store }
+
+export { store, persistor }
