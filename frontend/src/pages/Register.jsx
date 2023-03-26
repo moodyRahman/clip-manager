@@ -22,6 +22,37 @@ const Register = () => {
         var userPool = new CognitoUserPool(poolData);
         var attributeList = [];
 
+        var dataEmail = {
+            Name: 'email',
+            Value: email,
+        };
+
+        var dataUsername = {
+            Name: 'preferred_username',
+            Value: username,
+        };
+
+        var attributeEmail = new CognitoUserAttribute(dataEmail);
+        var attributeUsername = new CognitoUserAttribute(dataUsername);
+
+        // this feels kinda weird but it's what the docs do
+        attributeList.push(attributeEmail)
+        attributeList.push(attributeUsername)
+
+
+
+        userPool.signUp(username, password, attributeList, null, function (
+            err,
+            result
+        ) {
+            if (err) {
+                alert(err.message || JSON.stringify(err));
+                return;
+            }
+            var cognitoUser = result.user;
+            console.log('user name is ' + cognitoUser.getUsername());
+        });
+
     }
 
     const handleChange = (setter) => {
