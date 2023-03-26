@@ -1,5 +1,5 @@
 import express from 'express'
-
+import { verifyJSONBody } from '../middleware.js';
 const router = express.Router()
 
 router.get("/", (req, res, next) => {
