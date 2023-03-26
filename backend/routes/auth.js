@@ -15,6 +15,38 @@ router.post("/login", (req, res, next) => {
     res.send("backend endpoint for logins")
 })
 
+router.post("/confirm", verifyJSONBody(["username", "code"]), (req, res, next) => {
+
+    const { username, code } = req.body
+
+    var poolData = {
+        UserPoolId: `${process.env.COGNITO_USER_POOL_ID}`, // Your user pool id here
+        ClientId: `${process.env.COGNITO_CLIENT_ID}`, // Your client id here
+    };
+
+    var userPool = new CognitoUserPool(poolData);
+
+    var userData = {
+        Username: username,
+        Pool: userPool,
+    };
+
+    var cognitoUser = new CognitoUser(userData);
+
+    cognitoUser.confirmRegistration(code, true, function (err, result) {
+        if (err) {
+            res.status(401)
+            return res.send({ error: (err.message ? err.message : "see server logs") })
+        } else {
+            res.status(202)
+            return res.send({ status: "confirmed" })
+        }
+
+        // dispatch(successConfirm())
+        // navigate("/auth_test")
+
+    });
+})
 
 router.post("/signup", verifyJSONBody(["username", "password", "email"]), (req, res, next) => {
 
