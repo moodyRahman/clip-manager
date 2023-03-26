@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "auth_test/",
-            element: <>only authenticated users can see this</>
+            element: <AuthHome />
           }
         ]
       },
