@@ -1,13 +1,17 @@
 
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import express from 'express';
 import { authModule, resourceModule } from './routes/index.js'
 import morgan from "morgan"
 import bodyParser from "body-parser"
-
+import cors from "cors"
 const app = express();
 const PORT = 8087
 
 app.use(bodyParser.json())
+app.use(cors())
 
 morgan.token('keys', function (req, res) {
     if (req.method === "POST") {
