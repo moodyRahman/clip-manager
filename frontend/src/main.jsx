@@ -8,43 +8,52 @@ import './index.css'
 import Root from './pages/Root.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register';
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import { persistor, store } from './redux/store'
 import Confirm from './pages/Confirm';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import { PersistGate } from "redux-persist/integration/react"
 import AuthHome from './pages/AuthHome';
+import HomeSelector from './components/HomeSelector';
+import UnprotectedRoutes from './components/UnprotectedRoutes';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <Root />,
     children: [
       {
-        path: "/login",
-        element: <Login />
+        path: "/",
+        element: <HomeSelector />
+        // element: <>helloooo</>
       },
       {
-        path: "/signup",
-        element: <Register />
-      },
-      {
-        path: "/confirm",
-        element: <Confirm />
-      },
-      {
-        path: "/*",
-        element: <ProtectedRoutes />,
+        path: "",
+        element: <UnprotectedRoutes />,
         children: [
           {
-            path: "auth_test/",
-            element: <AuthHome />
-          }
+            path: "/login",
+            element: <Login />
+          },
+          {
+            path: "/signup",
+            element: <Register />
+          },
+          {
+            path: "/confirm",
+            element: <Confirm />
+          },
         ]
       },
       {
-        path: "/",
-        element: <div>saucey home page</div>
+        path: "",
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            path: "/auth_test",
+            element: <AuthHome />
+          }
+        ]
       }
     ]
   },

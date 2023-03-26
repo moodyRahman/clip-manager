@@ -53,7 +53,7 @@ const Confirm = () => {
         const data = await res.json()
         if (res.ok) {
             dispatch(successConfirm())
-            navigate("/auth_test")
+            navigate("/")
         }
         else {
             // handle error
@@ -90,6 +90,7 @@ const Confirm = () => {
     return (
         <>
             you're almost there! check your email for a verification code and check if you recieved it. <br />
+            DO NOT LEAVE THIS PAGE
             <input placeholder="verification code" value={code} onChange={handleChange(setCode)} /> <br />
             <button onClick={handleSubmit} >submit</button> <br /> <br />
             <button onClick={handleResend} >resend verification</button>

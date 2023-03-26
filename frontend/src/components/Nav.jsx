@@ -16,11 +16,11 @@ const NavElement = styled(Link)`
 
 const Nav = () => {
     const loggedin = useSelector((state) => state.auth.isLoggedIn)
+    const verification = useSelector((state) => state.auth.verification)
     const dispatch = useDispatch()
 
-    return (
-
-        <NavWrapper>
+    const nav = verification !== "in progress" ?
+        <>
             {
                 loggedin ? (<>
                     <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
@@ -33,6 +33,15 @@ const Nav = () => {
                     )
             }
             <NavElement to="/">home</NavElement>
+        </> :
+        <><NavElement onClick={() => { dispatch(logout()) }}>cancel</NavElement></>
+
+
+    return (
+
+        <NavWrapper>
+            {nav}
+
         </NavWrapper>
     )
 
