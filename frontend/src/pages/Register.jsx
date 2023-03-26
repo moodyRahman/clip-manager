@@ -1,16 +1,21 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import {
     CognitoUserPool,
     CognitoUserAttribute,
-    CognitoUser,
 } from 'amazon-cognito-identity-js';
+import { successRegister } from "../redux/authStore";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import { handleChange } from "../utils";
 
 const Register = () => {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
-    // tearing this straight out of the documentation
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleSubmit = () => {
         console.log(username, password, email)
@@ -18,6 +23,8 @@ const Register = () => {
             UserPoolId: `${import.meta.env.VITE_COGNITO_USER_POOL_ID}`, // Your user pool id here
             ClientId: `${import.meta.env.VITE_COGNITO_CLIENT_ID}`, // Your client id here
         };
+
+        console.log(poolData)
 
         var userPool = new CognitoUserPool(poolData);
         var attributeList = [];
@@ -41,24 +48,18 @@ const Register = () => {
 
 
 
-        userPool.signUp(username, password, attributeList, null, function (
-            err,
-            result
-        ) {
+        userPool.signUp(username, password, attributeList, null, (err, result) => {
             if (err) {
-                alert(err.message || JSON.stringify(err));
+                console.log(err)
                 return;
             }
-            var cognitoUser = result.user;
-            console.log('user name is ' + cognitoUser.getUsername());
+            else {
+                console.log(result)
+                dispatch(successRegister({ username: result.user.getUsername(), verification: "in progress" }))
+                navigate("/confirm")
+            }
         });
 
-    }
-
-    const handleChange = (setter) => {
-        return (e) => {
-            setter(e.target.value)
-        }
     }
 
     return (

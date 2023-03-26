@@ -8,7 +8,9 @@ import './index.css'
 import Root from './pages/Root.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register';
-
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
+import Confirm from './pages/Confirm';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
         element: <Register />
       },
       {
+        path: "/confirm",
+        element: <Confirm />
+      },
+      {
         path: "",
         element: <div>saucey home page</div>
       }
@@ -33,6 +39,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>,
 )
