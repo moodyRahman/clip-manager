@@ -11,13 +11,13 @@ export const authSlice = createSlice({
     initialState: initialState,
     reducers: {
         successRegister: (state, action) => {
-            const { username, verification } = action.payload
-            state.username = username
-            state.verification = verification
+            state.username = action.payload
+            state.verification = "in progress"
         },
         successConfirm: (state, action) => {
             state.confirmed = true
             state.isLoggedIn = true
+            state.verification = "verified"
         },
         successLogin: (state, action) => {
             state.username = action.payload

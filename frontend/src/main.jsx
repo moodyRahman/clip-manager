@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
 import Confirm from './pages/Confirm';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,17 @@ const router = createBrowserRouter([
         element: <Confirm />
       },
       {
-        path: "",
+        path: "/*",
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            path: "auth_test/",
+            element: <>only authenticated users can see this</>
+          }
+        ]
+      },
+      {
+        path: "/",
         element: <div>saucey home page</div>
       }
     ]

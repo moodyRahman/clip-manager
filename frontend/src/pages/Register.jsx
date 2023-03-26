@@ -24,8 +24,6 @@ const Register = () => {
             ClientId: `${import.meta.env.VITE_COGNITO_CLIENT_ID}`, // Your client id here
         };
 
-        console.log(poolData)
-
         var userPool = new CognitoUserPool(poolData);
         var attributeList = [];
 
@@ -55,7 +53,7 @@ const Register = () => {
             }
             else {
                 console.log(result)
-                dispatch(successRegister({ username: result.user.getUsername(), verification: "in progress" }))
+                dispatch(successRegister(result.user.getUsername()))
                 navigate("/confirm")
             }
         });
