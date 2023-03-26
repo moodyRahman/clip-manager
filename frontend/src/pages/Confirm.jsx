@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { handleChange } from "../utils"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -22,7 +22,47 @@ const Confirm = () => {
     }, [])
     const [code, setCode] = useState("")
 
-    const handleSubmit = () => {
+    const useOnUnmount = (callback, dependencies) => {
+        const isUnmounting = useRef(false);
+
+        useEffect(() => () => (isUnmounting.current = true), []);
+
+        useEffect(
+            () => () => {
+                if (isUnmounting.current) {
+                    callback();
+                }
+            },
+            dependencies
+        );
+    };
+
+    useOnUnmount(() => {
+        console.log("you're leaving the page")
+    }, [])
+
+    const handleSubmit = async () => {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/confirm`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username, code: code })
+        })
+        const data = await res.json()
+        if (res.ok) {
+            dispatch(successConfirm())
+            navigate("/auth_test")
+        }
+        else {
+            // handle error
+            console.log(data)
+            alert(data)
+        }
+    }
+
+    const handleResend = () => {
         var poolData = {
             UserPoolId: `${import.meta.env.VITE_COGNITO_USER_POOL_ID}`, // Your user pool id here
             ClientId: `${import.meta.env.VITE_COGNITO_CLIENT_ID}`, // Your client id here
@@ -37,15 +77,12 @@ const Confirm = () => {
 
         var cognitoUser = new CognitoUser(userData);
 
-        cognitoUser.confirmRegistration(code, true, function (err, result) {
+        cognitoUser.resendConfirmationCode(function (err, result) {
             if (err) {
                 alert(err.message || JSON.stringify(err));
                 return;
             }
-
-            dispatch(successConfirm())
-            navigate("/auth_test")
-
+            console.log('call result: ' + result);
         });
     }
 
@@ -54,7 +91,9 @@ const Confirm = () => {
         <>
             you're almost there! check your email for a verification code and check if you recieved it. <br />
             <input placeholder="verification code" value={code} onChange={handleChange(setCode)} /> <br />
-            <button onClick={handleSubmit} >submit</button>
+            <button onClick={handleSubmit} >submit</button> <br /> <br />
+            <button onClick={handleResend} >resend verification</button>
+
 
 
         </>

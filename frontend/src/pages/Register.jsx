@@ -1,8 +1,4 @@
 import { useState } from "react"
-import {
-    CognitoUserPool,
-    CognitoUserAttribute,
-} from 'amazon-cognito-identity-js';
 import { successRegister } from "../redux/authStore";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"
@@ -17,47 +13,25 @@ const Register = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        console.log(username, password, email)
-        var poolData = {
-            UserPoolId: `${import.meta.env.VITE_COGNITO_USER_POOL_ID}`, // Your user pool id here
-            ClientId: `${import.meta.env.VITE_COGNITO_CLIENT_ID}`, // Your client id here
-        };
-
-        var userPool = new CognitoUserPool(poolData);
-        var attributeList = [];
-
-        var dataEmail = {
-            Name: 'email',
-            Value: email,
-        };
-
-        var dataUsername = {
-            Name: 'preferred_username',
-            Value: username,
-        };
-
-        var attributeEmail = new CognitoUserAttribute(dataEmail);
-        var attributeUsername = new CognitoUserAttribute(dataUsername);
-
-        // this feels kinda weird but it's what the docs do
-        attributeList.push(attributeEmail)
-        attributeList.push(attributeUsername)
-
-
-
-        userPool.signUp(username, password, attributeList, null, (err, result) => {
-            if (err) {
-                console.log(err)
-                return;
-            }
-            else {
-                console.log(result)
-                dispatch(successRegister(result.user.getUsername()))
-                navigate("/confirm")
-            }
-        });
-
+    const handleSubmit = async () => {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username, password: password, email: email })
+        })
+        const data = await res.json()
+        if (res.ok) {
+            dispatch(successRegister(data.username))
+            navigate("/confirm")
+        }
+        else {
+            // handle error
+            console.log(data)
+            alert(data)
+        }
     }
 
     return (
