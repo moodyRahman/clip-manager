@@ -7,6 +7,7 @@ import {
 import './index.css'
 import Root from './pages/Root.jsx';
 import Login from './pages/Login.jsx';
+import Register from './pages/Register';
 
 
 const router = createBrowserRouter([
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <div>signing you up</div>
+        element: <Register />
       },
       {
         path: "",
