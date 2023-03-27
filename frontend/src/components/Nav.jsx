@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/authStore'
@@ -34,14 +34,13 @@ const Nav = () => {
             }
             <NavElement to="/">home</NavElement>
         </> :
-        <><NavElement onClick={() => { dispatch(logout()) }}>cancel</NavElement></>
+        <><NavElement to="/" onClick={() => { dispatch(logout()) }}>cancel</NavElement></>
 
 
     return (
 
         <NavWrapper>
             {nav}
-
         </NavWrapper>
     )
 
