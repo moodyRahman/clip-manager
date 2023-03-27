@@ -86,7 +86,7 @@ router.post("/login", verifyJSONBody(["username", "password"]), (req, res, next)
 
             console.log(err)
             res.status(403)
-            res.send("sadge")
+            res.send(err)
         },
     });
 
