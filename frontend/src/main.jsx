@@ -7,24 +7,53 @@ import {
 import './index.css'
 import Root from './pages/Root.jsx';
 import Login from './pages/Login.jsx';
-
+import Register from './pages/Register';
+import { Provider, useSelector } from 'react-redux'
+import { persistor, store } from './redux/store'
+import Confirm from './pages/Confirm';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import { PersistGate } from "redux-persist/integration/react"
+import AuthHome from './pages/AuthHome';
+import HomeSelector from './components/HomeSelector';
+import UnprotectedRoutes from './components/UnprotectedRoutes';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
     element: <Root />,
     children: [
       {
-        path: "/login",
-        element: <Login />
-      },
-      {
-        path: "/signup",
-        element: <div>signing you up</div>
+        path: "/",
+        element: <HomeSelector />
+        // element: <>helloooo</>
       },
       {
         path: "",
-        element: <div>saucey hgome page</div>
+        element: <UnprotectedRoutes />,
+        children: [
+          {
+            path: "/login",
+            element: <Login />
+          },
+          {
+            path: "/signup",
+            element: <Register />
+          },
+          {
+            path: "/confirm",
+            element: <Confirm />
+          },
+        ]
+      },
+      {
+        path: "",
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            path: "/auth_test",
+            element: <AuthHome />
+          }
+        ]
       }
     ]
   },
@@ -32,6 +61,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <PersistGate loading={<>loading</>} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
 )

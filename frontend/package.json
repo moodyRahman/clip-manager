@@ -9,17 +9,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "amazon-cognito-identity-js": "^6.2.0",
+    "aws-sdk": "^2.1343.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
+    "redux-persist": "^6.0.0",
     "sort-by": "^1.2.0",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/redux-persist": "^4.3.1",
     "@vitejs/plugin-react": "^3.1.0",
     "babel-plugin-styled-components": "^2.0.7",
     "vite": "^4.2.0"

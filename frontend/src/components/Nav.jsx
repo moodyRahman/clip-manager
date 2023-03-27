@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../redux/authStore'
+import { useEffect } from 'react'
 const NavWrapper = styled.ul`
     list-style-type: none;
     margin: 40px;
@@ -13,13 +15,32 @@ const NavElement = styled(Link)`
 `
 
 const Nav = () => {
+    const loggedin = useSelector((state) => state.auth.isLoggedIn)
+    const verification = useSelector((state) => state.auth.verification)
+    const dispatch = useDispatch()
+
+    const nav = verification !== "in progress" ?
+        <>
+            {
+                loggedin ? (<>
+                    <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
+                </>) :
+                    (
+                        <>
+                            <NavElement to="/login">login</NavElement>
+                            <NavElement to="/signup">sign up</NavElement>
+                        </>
+                    )
+            }
+            <NavElement to="/">home</NavElement>
+        </> :
+        <><NavElement to="/" onClick={() => { dispatch(logout()) }}>cancel</NavElement></>
+
 
     return (
 
         <NavWrapper>
-            <NavElement to="/login">login</NavElement>
-            <NavElement to="/signup">sign up</NavElement>
-            <NavElement to="/">home</NavElement>
+            {nav}
         </NavWrapper>
     )
 
