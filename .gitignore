@@ -1,2 +1,3 @@
 frontend/.env
 backend/.env
+.terraform/
