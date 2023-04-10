@@ -28,6 +28,13 @@ a:hover {
   min-height: 100vh;
 } */
 
+#usrInfo {
+  display: flex;
+  flex-direction: column;
+  margin-right: 30%;
+  margin-left: 30%;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

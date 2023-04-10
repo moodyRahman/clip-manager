@@ -5,13 +5,20 @@ import { logout } from '../redux/authStore'
 import { useEffect } from 'react'
 const NavWrapper = styled.ul`
     list-style-type: none;
-    margin: 40px;
+    margin: 3%;
     padding: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: #17171a;
+    border: ridge;
 `
 
 const NavElement = styled(Link)`
     display: inline;
-    padding-right: 30px;
+    padding-right: 4%;
+    padding-left: 4%;
+    font-size: 175%;
+    color: white;
 `
 
 const Nav = () => {
@@ -21,18 +28,18 @@ const Nav = () => {
 
     const nav = verification !== "in progress" ?
         <>
+            <NavElement to="/">Home</NavElement>
             {
                 loggedin ? (<>
                     <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
                 </>) :
                     (
                         <>
-                            <NavElement to="/login">login</NavElement>
-                            <NavElement to="/signup">sign up</NavElement>
+                            <NavElement to="/signup">Sign Up</NavElement>
+                            <NavElement to="/login">Login</NavElement>
                         </>
                     )
             }
-            <NavElement to="/">home</NavElement>
         </> :
         <><NavElement to="/" onClick={() => { dispatch(logout()) }}>cancel</NavElement></>
 
