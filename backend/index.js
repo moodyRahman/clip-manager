@@ -1,7 +1,5 @@
 
-import * as dotenv from 'dotenv'
-dotenv.config()
-
+import dotenv from "./config.js"
 import express from 'express';
 import { authModule, resourceModule } from './routes/index.js'
 import morgan from "morgan"

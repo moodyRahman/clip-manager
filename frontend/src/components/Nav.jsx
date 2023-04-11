@@ -33,6 +33,8 @@ const Nav = () => {
                     )
             }
             <NavElement to="/">home</NavElement>
+            <NavElement to="/video">video</NavElement>
+            <NavElement to="/upload">upload</NavElement>
         </> :
         <><NavElement to="/" onClick={() => { dispatch(logout()) }}>cancel</NavElement></>
 

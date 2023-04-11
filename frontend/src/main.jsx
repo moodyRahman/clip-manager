@@ -4,16 +4,22 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
+import { Provider, useSelector } from 'react-redux'
+import { persistor, store } from './redux/store'
+import { PersistGate } from "redux-persist/integration/react"
+
 import './index.css'
+
 import Root from './pages/Root.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register';
-import { Provider, useSelector } from 'react-redux'
-import { persistor, store } from './redux/store'
 import Confirm from './pages/Confirm';
-import ProtectedRoutes from './components/ProtectedRoutes';
-import { PersistGate } from "redux-persist/integration/react"
 import AuthHome from './pages/AuthHome';
+import VideoPage from './pages/VideoPage';
+import UploadPage from './pages/UploadPage';
+
+import ProtectedRoutes from './components/ProtectedRoutes';
 import HomeSelector from './components/HomeSelector';
 import UnprotectedRoutes from './components/UnprotectedRoutes';
 
@@ -43,6 +49,14 @@ const router = createBrowserRouter([
             path: "/confirm",
             element: <Confirm />
           },
+          {
+            path: "/video",
+            element: <VideoPage />
+          },
+          {
+            path: "/upload",
+            element: <UploadPage />
+          }
         ]
       },
       {
