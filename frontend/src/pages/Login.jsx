@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { successLogin } from "../redux/authStore"
+import styled from 'styled-components'
+
+const LogWrapper = styled.ul`
+    display: flex;
+    flex-direction: column;
+    margin-right: 30%;
+    margin-left: 30%;
+`
 
 const Login = () => {
 
@@ -39,11 +47,11 @@ const Login = () => {
 
     return (
         <>
-        <div id = "usrInfo">
+        <LogWrapper>
             <input onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
             <input onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
             <button onClick={handleSubmit}>submit</button>
-        </div>
+        </LogWrapper>
         </>
     )
 }

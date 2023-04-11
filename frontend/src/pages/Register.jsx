@@ -3,7 +3,14 @@ import { successRegister } from "../redux/authStore";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"
 import { handleChange } from "../utils";
+import styled from 'styled-components'
 
+const RegWrapper = styled.ul`
+    display: flex;
+    flex-direction: column;
+    margin-right: 30%;
+    margin-left: 30%;
+`
 const Register = () => {
 
     const [username, setUsername] = useState("")
@@ -36,12 +43,12 @@ const Register = () => {
 
     return (
         <>
-        <div id = "usrInfo">
+        <RegWrapper>
             <input onChange={handleChange(setEmail)} type="text" placeholder="email" value={email} />
             <input onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
             <input onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
             <button onClick={handleSubmit}>signup</button>
-        </div>
+        </RegWrapper>
         </>
     )
 }
