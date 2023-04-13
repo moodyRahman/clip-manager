@@ -14,7 +14,9 @@ const bucketName = "clip-manager-video-clips";
 //  and specify the read preference as secondary preferred
 
 MongoClient.connect(
-	"mongodb://clipdbmanager:Aadocdb1243@docdb-clip-manager.cinjbaykl6cc.us-east-1.docdb.amazonaws.com:27017/?tls=true&tlsCAFile=<path to rds-combined-ca-bundle.pem>&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false",
+	"mongodb://clipdbmanager:Aadocdb1243@docdb-clip-manager.cinjbaykl6cc.us-east-1.docdb.amazonaws.com:27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false", {
+	tlsCAFile: "rds-combined-ca-bundle.pem"
+},
 
 	function (err, client) {
 		if (err) throw err;
