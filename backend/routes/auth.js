@@ -7,9 +7,9 @@ import {
 } from "amazon-cognito-identity-js";
 import AWS from "aws-sdk/global.js";
 
-const { CognitoIdentityCredentials: CIC } = AWS;
+import { verifyJSONBody } from "../middlewares/middleware.js";
 
-import { verifyJSONBody } from "../middleware.js";
+const { CognitoIdentityCredentials: CIC } = AWS;
 
 const router = express.Router();
 
@@ -111,7 +111,7 @@ router.post(
 
 		var cognitoUser = new CognitoUser(userData);
 
-		cognitoUser.confirmRegistration(code, true, function (err, result) {
+		cognitoUser.confirmRegistration(code, true, async function (err, result) {
 			if (err) {
 				res.status(401);
 				return res.send({
@@ -135,7 +135,7 @@ router.post("/resend", verifyJSONBody(["username"]), (req, res, next) => {
 router.post(
 	"/signup",
 	verifyJSONBody(["username", "password", "email"]),
-	(req, res, next) => {
+	async (req, res, next) => {
 		const { username, password, email } = req.body;
 
 		var poolData = {
@@ -165,18 +165,24 @@ router.post(
 		attributeList.push(attributeEmail);
 		attributeList.push(attributeUsername);
 
-		userPool.signUp(username, password, attributeList, null, (err, result) => {
-			if (err) {
-				console.log(err);
-				return res.send({
-					error: err.message ? err.message : "see server logs",
-				});
-			} else {
-				var cognitoUser = result.user;
-				res.status(201);
-				return res.send({ username: cognitoUser.getUsername() });
+		userPool.signUp(
+			username,
+			password,
+			attributeList,
+			null,
+			async (err, result) => {
+				if (err) {
+					console.log(err);
+					return res.send({
+						error: err.message ? err.message : "see server logs",
+					});
+				} else {
+					var cognitoUser = result.user;
+					res.status(201);
+					return res.send({ username: cognitoUser.getUsername() });
+				}
 			}
-		});
+		);
 	}
 );
 

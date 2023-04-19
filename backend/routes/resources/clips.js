@@ -1,39 +1,12 @@
 import express from "express";
 import AWS from "aws-sdk";
 import multer from "multer";
-import MongoDb from "mongodb";
 
+const bucketName = process.env.BUCKET_NAME;
 
 const upload = multer();
 const router = express.Router();
 const s3 = new AWS.S3();
-const bucketName = "clip-manager-video-clips";
-const MongoClient = MongoDb.MongoClient;
-
-const uri = "mongodb://clips-user:clips-password@44.203.146.149:27017/clipsdb";
-
-async function main() {
-	const client = new MongoClient(uri);
-
-	try {
-		// Connect to the MongoDB cluster
-		await client.connect();
-
-		// Make the appropriate DB calls
-		const db = client.db("clipsdb");
-		const collection = db.collection("clips");
-
-		const docs = await collection.find({}).toArray();
-		console.log("Found the following documents:");
-		console.log(docs);
-	} catch (e) {
-		console.error(e);
-	} finally {
-		await client.close();
-	}
-}
-
-main().catch(console.error);
 
 router.get("/", (req, res, next) => {
 	res.send("clips module online");
