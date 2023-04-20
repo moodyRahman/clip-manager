@@ -1,50 +1,31 @@
-import { fileURLToPath } from "url";
-import path from "path";
-import fs from "fs";
-
 import Sequelize from "sequelize";
 import configJson from "../config/config.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import clipModel from "./Clip.js";
+import userModel from "./User.js";
 
 const env = process.env.NODE_ENV || "development";
 const config = configJson[env];
-const basename = path.basename(__filename);
 const db = {};
 
-config.logging = true;
+config.logging = false;
 
-const sequelize = new Sequelize(
+let sequelize;
+
+sequelize = new Sequelize(
 	config.database,
 	config.username,
 	config.password,
-	{
-		host: config.host,
-		port: config.port,
-		dialect: config.dialect,
-		logging: console.log,
-		dialectOptions: {
-			ssl: {
-				ca: fs.readFileSync("global-bundle.pem"),
-			},
-		},
-		language: "en",
-	}
+	config
 );
 
-fs.readdirSync(__dirname)
-	.filter(
-		(file) =>
-			file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-	)
-	.forEach((file) => {
-		const model = require(path.join(__dirname, file))(
-			sequelize,
-			Sequelize.DataTypes
-		);
-		db[model.name] = model;
-	});
+const models = {
+	Clip: clipModel(sequelize, Sequelize.DataTypes),
+	User: userModel(sequelize, Sequelize.DataTypes),
+};
+
+Object.keys(models).forEach((modelName) => {
+	db[modelName] = models[modelName];
+});
 
 Object.keys(db).forEach((modelName) => {
 	if (db[modelName].associate) {
@@ -54,5 +35,20 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+(async () => {
+    try {
+      await sequelize.authenticate(); // authenticate the connection to the database
+      const tableNames = Object.keys(sequelize.models); // get all the table names
+      console.log(tableNames); // print the table names
+
+      // Drop the Clip and User tables
+      await sequelize.drop({ cascade: true });
+      console.log('Clip and User tables dropped');
+      
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+    }
+  })();
 
 export default db;

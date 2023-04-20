@@ -2,11 +2,28 @@ import express from "express";
 import AWS from "aws-sdk";
 import multer from "multer";
 
+import db from "../../models/index.js";
+import { getAllUsers, createUser, deleteUser, printAllClips} from "../../utils/modelsUtil.js";
+
 const bucketName = process.env.BUCKET_NAME;
 
 const upload = multer();
 const router = express.Router();
 const s3 = new AWS.S3();
+
+console.log(await getAllUsers(db));
+// createUser(db, "test", "test bio", "test cognito id");
+
+// GET /resources/clips/get 			returns a list of json objects with s3url, title, description, and owner, owner consist of username, bio
+// GET /resources/clips/get/:id 		returns a single json object with s3url, title, description, and owner, owner consist of username, bio
+// POST /resources/clips/upload 		accepts a file and create s3url, title, description, and ownerID into database
+// DELETE /resources/clips/delete/:id 	deletes a single clip
+// PUT /resources/clips/update/:id 		updates a single clip json file with s3url, title, description
+// GET /resources/clips/search/:query 	returns a list of json objects with s3url, title, description, and owner, owner consist of username, bio from search query as title
+// PUT /resources/update/setting 		updates a user's bio
+
+
+
 
 router.get("/", (req, res, next) => {
 	res.send("clips module online");
@@ -46,7 +63,7 @@ router.post("/upload", upload.single("file"), async (req, res, next) => {
 	}
 });
 
-router.delete("/delete", (req, res, next) => {
+router.delete("/delete/:id", (req, res, next) => {
 	res.send("deleting video");
 });
 

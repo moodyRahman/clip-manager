@@ -44,17 +44,9 @@ app.use((err, req, res, next) => {
 
 // update DB tables based on model updates. Does not handle renaming tables/columns
 // NOTE: toggling this to true drops all tables (including data)
+// ❗❗❗❗❗⚠️⚠️⚠️⚠️⚠️⚠️
 db.sequelize.sync({ force: false });
-
-// check if DB is connected
-// db.sequelize
-//     .authenticate()
-//     .then(() => {
-//         console.log("Connection has been established successfully.");
-//     })
-//     .catch((err) => {
-//         console.error("Unable to connect to the database:", err);
-//     });
+// ❗❗❗❗❗⚠️⚠️⚠️⚠️⚠️⚠️
 
 app.listen(PORT, () => {
 	console.log(`backend online at http://localhost:${PORT}`);
