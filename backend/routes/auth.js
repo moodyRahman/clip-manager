@@ -4,6 +4,7 @@ import {
 	CognitoUserAttribute,
 	CognitoUser,
 	AuthenticationDetails,
+	CognitoIdToken,
 } from "amazon-cognito-identity-js";
 import AWS from "aws-sdk/global.js";
 
@@ -118,6 +119,7 @@ router.post(
 					error: err.message ? err.message : "see server logs",
 				});
 			} else {
+
 				res.status(202);
 				return res.send({ status: "confirmed" });
 			}

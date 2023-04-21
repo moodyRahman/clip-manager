@@ -3,7 +3,15 @@ import AWS from "aws-sdk";
 import multer from "multer";
 
 import db from "../../models/index.js";
-import { getAllUsers, createUser, deleteUser, printAllClips} from "../../utils/modelsUtil.js";
+import {
+	getAllUsers,
+	getAllClips,
+	getClip,
+	getUser,
+	getUserOwnedClips,
+	createClip,
+	deleteClip,
+} from "../../utils/modelsUtil.js";
 
 const bucketName = process.env.BUCKET_NAME;
 
@@ -21,9 +29,6 @@ console.log(await getAllUsers(db));
 // PUT /resources/clips/update/:id 		updates a single clip json file with s3url, title, description
 // GET /resources/clips/search/:query 	returns a list of json objects with s3url, title, description, and owner, owner consist of username, bio from search query as title
 // PUT /resources/update/setting 		updates a user's bio
-
-
-
 
 router.get("/", (req, res, next) => {
 	res.send("clips module online");
@@ -57,6 +62,7 @@ router.post("/upload", upload.single("file"), async (req, res, next) => {
 			Body: req.file.buffer,
 		};
 		const result = await s3.upload(params).promise();
+
 		res.send(result);
 	} catch (err) {
 		next(err);
