@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { successLogin } from "../redux/authStore";
@@ -22,7 +22,8 @@ const Login = () => {
 		});
 
 		if (res.ok) {
-			dispatch(successLogin(username));
+			const data = await res.json();
+			dispatch(successLogin({ username: username, userID: data.id }));
 			navigate("/");
 		}
 	};

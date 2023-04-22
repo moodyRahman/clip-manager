@@ -3,7 +3,8 @@ const initialState = {
     isLoggedIn: false,
     confirmed: false,
     username: "",
-    verification: "unverified"
+    verification: "unverified",
+    userID: ""
 }
 
 export const authSlice = createSlice({
@@ -20,15 +21,18 @@ export const authSlice = createSlice({
             state.verification = "verified"
         },
         successLogin: (state, action) => {
-            state.username = action.payload
+            const { username, userID } = action.payload;
+            state.username = username
             state.confirmed = true
             state.isLoggedIn = true
+            state.userID = userID
         },
         logout: (state, action) => {
             state.username = ""
             state.confirmed = ""
             state.isLoggedIn = false
             state.verification = "unverified"
+            state.userId = ""
         }
     },
 })

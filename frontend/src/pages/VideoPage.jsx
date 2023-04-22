@@ -5,19 +5,20 @@ const VideoPage = () => {
 	const [videoUrls, setVideoUrls] = useState([]);
 
 	async function fetchVideoUrls() {
-		const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/resources/clips/get`);
-		const data = await response.json();
-		setVideoUrls(data);
-		localStorage.setItem("videoUrls", JSON.stringify(data)); // store data in localStorage
+		try {
+			const response = await fetch(
+				`${import.meta.env.VITE_BACKEND_URL}/resources/clips/get`
+			);
+			const data = await response.json();
+			const urls = data.map((clip) => clip.s3url); // Extract s3url property from each clip object
+			setVideoUrls(urls);
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	useEffect(() => {
-		const cachedData = localStorage.getItem("videoUrls");
-		if (cachedData) {
-			setVideoUrls(JSON.parse(cachedData)); // retrieve cached data from localStorage
-		} else {
-			fetchVideoUrls();
-		}
+		fetchVideoUrls();
 	}, []);
 
 	return (
