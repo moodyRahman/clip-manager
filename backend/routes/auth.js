@@ -10,7 +10,7 @@ import passport from "../middlewares/authentication.js";
 import { verifyJSONBody } from "../middlewares/middleware.js";
 
 const { CognitoIdentityCredentials: CIC } = AWS;
-const app = express();
+
 const router = express.Router();
 
 const poolData = {

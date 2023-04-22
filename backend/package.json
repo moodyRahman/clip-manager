@@ -17,7 +17,6 @@
     "mysql2": "^3.2.3",
     "nodemon": "^2.0.21",
     "passport": "^0.6.0",
-    "passport-cognito": "^0.2.2",
     "passport-local": "^1.0.0",
     "sequelize": "^6.31.0"
   },

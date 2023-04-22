@@ -2,7 +2,7 @@ import passport from "passport";
 import Strategy from "passport-local";
 
 import db from "../models/index.js";
-import User from "../models/User.js";
+
 import {
 	CognitoUserPool,
 	CognitoUser,
