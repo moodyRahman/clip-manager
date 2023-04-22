@@ -36,19 +36,19 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-(async () => {
-    try {
-      await sequelize.authenticate(); // authenticate the connection to the database
-      const tableNames = Object.keys(sequelize.models); // get all the table names
-      console.log(tableNames); // print the table names
+// (async () => {
+//     try {
+//       await sequelize.authenticate(); // authenticate the connection to the database
+//       const tableNames = Object.keys(sequelize.models); // get all the table names
+//       console.log(tableNames); // print the table names
 
-      // Drop the Clip and User tables
-      await sequelize.drop({ cascade: true });
-      console.log('Clip and User tables dropped');
-      
-    } catch (error) {
-      console.error('Unable to connect to the database:', error);
-    }
-  })();
+//       // Drop the Clip and User tables
+//       await sequelize.drop({ cascade: true });
+//       console.log('Clip and User tables dropped');
+
+//     } catch (error) {
+//       console.error('Unable to connect to the database:', error);
+//     }
+//   })();
 
 export default db;

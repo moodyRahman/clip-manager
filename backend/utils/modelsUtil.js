@@ -33,7 +33,7 @@ const createUser = async (models, username, bio, cognitoId) => {
 		const newUser = await models.User.create({
 			username: username,
 			bio: bio,
-			cognitoId: cognitoId,
+			cognitoID: cognitoId,
 		});
 		console.log(`User ${newUser.username} created with ID ${newUser.id}`);
 	} catch (err) {

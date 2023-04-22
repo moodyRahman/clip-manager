@@ -11,16 +11,19 @@ import {
 	getUserOwnedClips,
 	createClip,
 	deleteClip,
+	createUser
 } from "../../utils/modelsUtil.js";
 
+
+import passport from "../../middlewares/authentication.js"
 const bucketName = process.env.BUCKET_NAME;
 
 const upload = multer();
 const router = express.Router();
 const s3 = new AWS.S3();
 
-console.log(await getAllUsers(db));
-// createUser(db, "test", "test bio", "test cognito id");
+// console.log(await getAllUsers(db));
+// createUser(db, "donaldduck", "Quack quack!", "4c7170c2-0ffe-4071-a4dc-4ab7e31da514");
 
 // GET /resources/clips/get 			returns a list of json objects with s3url, title, description, and owner, owner consist of username, bio
 // GET /resources/clips/get/:id 		returns a single json object with s3url, title, description, and owner, owner consist of username, bio
@@ -54,7 +57,7 @@ router.get("/get/:id", (req, res, next) => {
 	res.send(`looking for video ${req.params.id}?`);
 });
 
-router.post("/upload", upload.single("file"), async (req, res, next) => {
+router.post("/upload", passport.isAuthenticated(), upload.single("file"), async (req, res, next) => {
 	try {
 		const params = {
 			Bucket: bucketName,
@@ -69,8 +72,15 @@ router.post("/upload", upload.single("file"), async (req, res, next) => {
 	}
 });
 
-router.delete("/delete/:id", (req, res, next) => {
-	res.send("deleting video");
-});
+router.delete(
+	"/delete/:id",
+	passport.isAuthenticated(),
+	(req, res, next) => {
+		res.json({
+			message: "You are authorized to delete",
+			user: req.user,
+		});
+	}
+);
 
 export { router as clipsModule };
