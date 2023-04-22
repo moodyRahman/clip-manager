@@ -81,7 +81,7 @@ delete clip by id
 
 <br>
 
-###  ```/resources/clips/user/:id```
+### GET ```/resources/clips/user/:id```
 get user by id
 ##### example:
 ```/resources/clips/user/<cognitoID>```
@@ -100,7 +100,7 @@ get user by id
 
 <br>
 
-### ```/resources/clips/user/:id/clips```
+### GET ```/resources/clips/user/:id/clips```
 get all clips belong to the user
 ##### example:
 ```/resources/clips/user/<cognitoID>/clips```
