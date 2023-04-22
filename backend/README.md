@@ -68,7 +68,7 @@ formData consist of the following:
     title: "test clip 1",
     description: "test description 1",
     file: <file>
-    userID: <user's cognitoID>
+    userID: "<user's cognitoID>"
 }
 ```
 
@@ -110,19 +110,19 @@ get all clips belong to the user
 [
     {
         "id": 5,
-        "title": "valorant test clip",
-        "description": "test description",
-        "s3url": "https://clip-manager-video-clips.s3.amazonaws.com/valorant-clip.mov",
-        "ownerID": "4c7170c2-0ffe-4071-a4dc-4ab7e31da514",
+        "title": "test clip 5",
+        "description": "test description 5",
+        "s3url": "<s3url>",
+        "ownerID": "<cognitoID>",
         "createdAt": "2023-04-22T21:52:47.000Z",
         "updatedAt": "2023-04-22T21:52:47.000Z"
     },
     {
-        "id": 5,
-        "title": "valorant test clip",
-        "description": "test description",
-        "s3url": "https://clip-manager-video-clips.s3.amazonaws.com/valorant-clip.mov",
-        "ownerID": "4c7170c2-0ffe-4071-a4dc-4ab7e31da514",
+        "id": 7,
+        "title": "test clip 7",
+        "description": "test description 7",
+        "s3url": "<s3url>",
+        "ownerID": "<cognitoID>",
         "createdAt": "2023-04-22T21:52:47.000Z",
         "updatedAt": "2023-04-22T21:52:47.000Z"
     }
