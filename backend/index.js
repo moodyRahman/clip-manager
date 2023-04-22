@@ -1,29 +1,21 @@
 import express from "express";
-import expressSession from "express-session";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
 
 import dotenv from "./config/dotenv.js";
 import db from "./models/index.js";
-import passport from "./middlewares/authentication.js";
+
 import { authModule, resourceModule } from "./routes/index.js";
 
 const app = express();
 const PORT = 8087;
 
-app.use(
-	expressSession({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: true,
-	})
-);
+
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 morgan.token("keys", function (req, res) {
 	if (req.method === "POST") {

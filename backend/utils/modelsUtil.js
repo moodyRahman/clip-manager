@@ -1,7 +1,26 @@
-const getAllUsers = async (models) => {
+const getAllClips = async (models) => {
+	try {
+		const clips = await models.Clip.findAll({
+			include: [
+				{
+					model: models.User,
+					as: "owner",
+					attributes: ["username", "cognitoID"],
+				},
+			],
+			attributes: ["id", "s3url", "title", "description"],
+			raw: true,
+		});
+		return clips;
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+const getAllUser = async (models) => {
 	try {
 		const users = await models.User.findAll({
-			attributes: ["id", "username", "bio", "cognitoId"],
+			attributes: ["username", "bio", "cognitoID"],
 			raw: true,
 		});
 		return users;
@@ -10,47 +29,17 @@ const getAllUsers = async (models) => {
 	}
 };
 
-const getAllClips = async (models) => {
-	try {
-		const clips = await models.Clip.findAll({
-			include: [
-				{
-					model: models.User,
-					as: "owner",
-					attributes: ["username", "bio", "id"],
-				},
-			],
-			attributes: ["id", "s3url", "title", "description", "ownerID"],
-		});
-		return clips;
-	} catch (err) {
-		console.error(err);
-	}
-};
-
-const createUser = async (models, username, bio, cognitoId) => {
+const createUser = async (models, username, bio, cognitoID) => {
 	try {
 		const newUser = await models.User.create({
 			username: username,
 			bio: bio,
-			cognitoID: cognitoId,
+			cognitoID: cognitoID,
 		});
-		console.log(`User ${newUser.username} created with ID ${newUser.id}`);
 	} catch (err) {
 		console.error(err);
 	}
 };
-
-// delete user base on username
-// const deleteUser = async (models, username) => {
-// 	try {
-// 		const user = await models.User.findOne({ where: { username } });
-// 		await user.destroy();
-// 		console.log(`User ${username} deleted`);
-// 	} catch (err) {
-// 		console.error(err);
-// 	}
-// };
 
 const createClip = async (models, s3url, title, description, ownerID) => {
 	try {
@@ -60,7 +49,6 @@ const createClip = async (models, s3url, title, description, ownerID) => {
 			description: description,
 			ownerID: ownerID,
 		});
-		console.log(`Clip ${newClip.title} created with ID ${newClip.id}`);
 	} catch (err) {
 		console.error(err);
 	}
@@ -68,15 +56,15 @@ const createClip = async (models, s3url, title, description, ownerID) => {
 
 // delete clip base on the clip id if the owner id matches
 const deleteClip = async (models, clipID, ownerID) => {
-	try {
-		const clip = await models.Clip.findOne({
-			where: { id: clipID, ownerID: ownerID },
-		});
-		await clip.destroy();
-		console.log(`Clip ${clip.title} deleted`);
-	} catch (err) {
-		console.error(err);
+	const clip = await models.Clip.findOne({
+		where: { id: clipID, ownerID: ownerID },
+	});
+	if (!clip) {
+		throw new Error("Clip not found");
 	}
+	const tempClip = clip;
+	await clip.destroy();
+	return tempClip;
 };
 
 // get a specific clip base on the clip id
@@ -84,6 +72,15 @@ const getClip = async (models, clipID) => {
 	try {
 		const clip = await models.Clip.findOne({
 			where: { id: clipID },
+			raw: true,
+			include: [
+				{
+					model: models.User,
+					as: "owner",
+					attributes: ["username", "cognitoID"],
+				},
+			],
+			attributes: ["id", "s3url", "title", "description", "createdAt"],
 		});
 		return clip;
 	} catch (err) {
@@ -95,7 +92,7 @@ const getClip = async (models, clipID) => {
 const getUser = async (models, userID) => {
 	try {
 		const user = await models.User.findOne({
-			where: { id: userID },
+			where: { cognitoID: userID },
 		});
 		return user;
 	} catch (err) {
@@ -115,5 +112,13 @@ const getUserOwnedClips = async (models, userID) => {
 	}
 };
 
-
-export { getAllUsers, getAllClips, createUser, createClip, deleteClip, getClip, getUser, getUserOwnedClips };
+export {
+	getAllClips,
+	createUser,
+	createClip,
+	deleteClip,
+	getClip,
+	getUser,
+	getUserOwnedClips,
+	getAllUser,
+};

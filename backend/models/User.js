@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
         {
             username: { type: DataTypes.STRING, allowNull: false },
             bio: { type: DataTypes.STRING, allowNull: true },
-            cognitoID: { type: DataTypes.STRING, allowNull: false }
+            cognitoID: { type: DataTypes.STRING, allowNull: false, unique: true}
         },
         {
             sequelize,

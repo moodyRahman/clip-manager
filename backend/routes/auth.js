@@ -3,11 +3,14 @@ import {
 	CognitoUserPool,
 	CognitoUserAttribute,
 	CognitoUser,
+	AuthenticationDetails,
 } from "amazon-cognito-identity-js";
 import AWS from "aws-sdk/global.js";
+import jwt from "jsonwebtoken";
 
-import passport from "../middlewares/authentication.js";
 import { verifyJSONBody } from "../middlewares/middleware.js";
+import { createUser } from "../utils/modelsUtil.js";
+import db from "../models/index.js";
 
 const { CognitoIdentityCredentials: CIC } = AWS;
 
@@ -25,38 +28,73 @@ router.get("/", (req, res, next) => {
 router.post(
 	"/login",
 	verifyJSONBody(["username", "password"]),
-	passport.authenticate("local"),
-	(req, res) => {
-		// If this function gets called, authentication was successful.
-		// `req.user` contains the authenticated user.
-		res.json({ message: "Successfully Login" });
+	(req, res, next) => {
+		const { username, password } = req.body;
+
+		var authenticationData = {
+			Username: username,
+			Password: password,
+		};
+
+		var authenticationDetails = new AuthenticationDetails(authenticationData);
+
+		var userPool = new CognitoUserPool(poolData);
+
+		var userData = {
+			Username: username,
+			Pool: userPool,
+		};
+
+		var cognitoUser = new CognitoUser(userData);
+
+		cognitoUser.authenticateUser(authenticationDetails, {
+			onSuccess: function (result) {
+				var accessToken = result.getAccessToken().getJwtToken();
+				const decodedToken = jwt.decode(accessToken);
+				const cognitoId = decodedToken.sub;
+
+				res.header(200);
+				res.send({
+					status: 200,
+					message: "success",
+					username: username,
+					id: cognitoId,
+				});
+
+				//POTENTIAL: Region needs to be set if not already set previously elsewhere.
+
+				// let userPoolURL = `cognito-idp.us-east-1.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`
+
+				// AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+				//     IdentityPoolId: `${process.env.COGNITO_IDENTITY_POOL_ID}`, // your identity pool id here
+				//     Logins: {
+				//         userPoolURL: result
+				//             .getIdToken()
+				//             .getJwtToken(),
+				//     },
+				// });
+
+				// //refreshes credentials using AWS.CognitoIdentity.getCredentialsForIdentity()
+				// AWS.config.credentials.refresh(error => {
+				//     if (error) {
+				//         console.error(error);
+				//     } else {
+				//         // Instantiate aws sdk service objects now that the credentials have been updated.
+				//         // example: var s3 = new AWS.S3();
+				//         console.log('Successfully logged!');
+				//         res.send("all good!!!")
+				//     }
+				// });
+			},
+
+			onFailure: function (err) {
+				console.log(err);
+				res.status(403);
+				res.send(err);
+			},
+		});
 	}
 );
-
-router.get("/login", (req, res) => {
-	if (req.user) {
-		res.json(req.user);
-	} else {
-		res.sendStatus(401);
-	}
-});
-
-router.get("/protected-route", passport.isAuthenticated(), function (req, res) {
-	// This is your protected route
-	// You can access the authenticated user's data through req.user
-	res.json({
-		message: "You are authorized to access this route!",
-		user: req.user,
-	});
-});
-
-router.post("/logout", (req, res, next) => {
-
-	req.logout((err) => {
-		if (err) return next(err);
-		res.status(200).json({ message: "Logout successful" });
-	});
-});
 
 router.post(
 	"/confirm",
@@ -73,40 +111,20 @@ router.post(
 
 		var cognitoUser = new CognitoUser(userData);
 
-		cognitoUser.confirmRegistration(code, true, async function (err, result) {
+		cognitoUser.confirmRegistration(code, true, function (err, result) {
 			if (err) {
 				res.status(401);
 				return res.send({
 					error: err.message ? err.message : "see server logs",
 				});
 			} else {
-				cognitoUser.authenticateUser(authenticationDetails, {
-					onSuccess: function (result) {
-						cognitoUser.getUserAttributes(function (err, attributes) {
-							if (err) {
-								res.status(401);
-								return res.send({
-									error: err.message ? err.message : "see server logs",
-								});
-							} else {
-								var cognitoId = attributes
-									.find((attr) => attr.getName() === "sub")
-									.getValue();
-								res.status(202);
-								return res.send({
-									status: "confirmed",
-									cognitoId: cognitoId,
-								});
-							}
-						});
-					},
-					onFailure: function (err) {
-						console.log(err);
-						res.status(403);
-						res.send(err);
-					},
-				});
+				// createUser(db, username, "", )
+				res.status(202);
+				return res.send({ status: "confirmed" });
 			}
+
+			// dispatch(successConfirm())
+			// navigate("/auth_test")
 		});
 	}
 );
@@ -154,6 +172,8 @@ router.post(
 					});
 				} else {
 					var cognitoUser = result.user;
+					let cognitoId = result.userSub;
+					let user = await createUser(db, username, "", cognitoId);
 					res.status(201);
 					return res.send({ username: cognitoUser.getUsername() });
 				}

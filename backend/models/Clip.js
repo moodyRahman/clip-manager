@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
 			title: { type: DataTypes.STRING, allowNull: false },
 			description: { type: DataTypes.STRING, allowNull: true },
 			s3url: { type: DataTypes.STRING, allowNull: false },
-			ownerID: { type: DataTypes.INTEGER, allowNull: false },
+			ownerID: { type: DataTypes.STRING, allowNull: false },
 		},
 		{
 			sequelize,
@@ -19,6 +19,7 @@ export default (sequelize, DataTypes) => {
 	Clip.associate = (models) => {
 		Clip.belongsTo(models.User, {
 			foreignKey: "ownerID",
+			targetKey: "cognitoID",
 			as: "owner",
 		});
 	};
