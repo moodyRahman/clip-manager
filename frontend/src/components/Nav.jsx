@@ -31,7 +31,6 @@ const Nav = () => {
     const nav = verification !== "in progress" ?
         <>
             <NavElement to="/">home</NavElement>
-            <NavElement to="/test">test</NavElement>
             <SearchBar>Search...</SearchBar>
             {
                 loggedin ? (<>
