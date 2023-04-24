@@ -3,15 +3,24 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/authStore'
 import { useEffect } from 'react'
+import SearchBar from './SearchBar'
+
 const NavWrapper = styled.ul`
     list-style-type: none;
-    margin: 40px;
+    margin: 3%;
     padding: 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: #17171a;
+    border: ridge;
 `
 
 const NavElement = styled(Link)`
     display: inline;
-    padding-right: 30px;
+    padding-right: 4%;
+    padding-left: 4%;
+    font-size: 175%;
+    color: white;
 `
 
 const Nav = () => {
@@ -21,6 +30,9 @@ const Nav = () => {
 
     const nav = verification !== "in progress" ?
         <>
+            <NavElement to="/">home</NavElement>
+            <NavElement to="/test">test</NavElement>
+            <SearchBar>Search...</SearchBar>
             {
                 loggedin ? (<>
                     <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
@@ -32,7 +44,9 @@ const Nav = () => {
                         </>
                     )
             }
-            <NavElement to="/">home</NavElement>
+            {/* <NavElement to="/">home</NavElement>
+            <NavElement to="/test">test</NavElement>
+            <SearchBar>Search...</SearchBar> */}
         </> :
         <><NavElement to="/" onClick={() => { dispatch(logout()) }}>cancel</NavElement></>
 

@@ -4,8 +4,11 @@ import video from '../assets/video.mp4'
 
 const VideoWrapper = styled.ul`
     display: flex;
-    padding-left: 2%;
-    flex-direction: row;
+
+`
+
+const InternalVideoWrapper = styled.ul`
+display: flex;
 `
 
 const TitleWrapper = styled.ul`
@@ -23,8 +26,15 @@ class VideoComponent extends Component {
                     <video width="320" height="180" controls>
                        <source src ={video} type="video/mp4" />
                     </video>
+                    <InternalVideoWrapper>
+                    <video width="320" height="180" controls>
+                       <source src ={video} type="video/mp4" />
+                    </video>
+                    </InternalVideoWrapper>
                 </VideoWrapper>
-            <p>Title</p>
+                <TitleWrapper>
+                    <p>Title</p>
+                </TitleWrapper>
                 <VideoWrapper>
                     <video width="320" height="180" controls>
                        <source src ={video} type="video/mp4" />

@@ -1,7 +1,5 @@
 import React from 'react'
 
-
-
 function SearchBar(props) {
   const handleSearch = (event) => {
     props.onSearch(event.target.value)
