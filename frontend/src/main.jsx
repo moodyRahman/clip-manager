@@ -16,6 +16,8 @@ import { PersistGate } from "redux-persist/integration/react"
 import AuthHome from './pages/AuthHome';
 import HomeSelector from './components/HomeSelector';
 import UnprotectedRoutes from './components/UnprotectedRoutes';
+import SpecificVideo from './pages/SpecificVideo';
+
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,10 @@ const router = createBrowserRouter([
             path: "/confirm",
             element: <Confirm />
           },
+          {
+            path: "/specificvideo",
+            element: <SpecificVideo />
+          }
         ]
       },
       {
