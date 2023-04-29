@@ -43,7 +43,7 @@ router.get("/get", async (req, res, next) => {
 				const url = await s3.getSignedUrlPromise("getObject", {
 					Bucket: bucketName,
 					Key: clip.s3url.split("/").slice(-1)[0],
-					Expires: process.env.S3_URL_EXPIRATION,
+					Expires: parseInt(process.env.S3_URL_EXPIRATION),
 				});
 				return { ...clip, s3url: url };
 			})
