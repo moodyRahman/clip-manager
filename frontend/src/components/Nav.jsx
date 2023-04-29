@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/authStore'
 import { useEffect } from 'react'
+import SearchBar from './SearchBar'
+
+
 const NavWrapper = styled.ul`
     list-style-type: none;
     margin: 3%;
@@ -29,6 +32,8 @@ const Nav = () => {
     const nav = verification !== "in progress" ?
         <>
             <NavElement to="/">Home</NavElement>
+            <NavElement to="/specificvideo">SpecificVideo</NavElement>
+            <SearchBar>Search...</SearchBar>
             {
                 loggedin ? (<>
                     <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
