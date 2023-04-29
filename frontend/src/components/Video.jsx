@@ -18,7 +18,7 @@ const VideoWrapperInline = styled.ul`
     padding-left: 0rem;
 `
 
-const TextWrapper = styled.ul`
+const TitleWrapper = styled.ul`
     display: flex;
     justify-content: center;
 `
@@ -28,64 +28,51 @@ class VideoComponent extends Component {
     render() {
         return(
             <>
+                <h1>ALL</h1>
                 <VideoWrapper>
                     <VideoWrapperInline>
-                        <TextWrapper>
-                            <p>JASON</p>
-                        </TextWrapper>
                         <video width="640" height="360" controls>
-                            <source src ={video1} type="video/mp4" />
+                            <source src ={video4} type="video/mp4" />
                         </video>
-                        <TextWrapper>
-                            <p>Apex Legends Wipe</p>
-                        </TextWrapper>
+                        <TitleWrapper>
+                            <p>Jason -&nbsp;</p><p>Valorant Teleporter</p>
+                        </TitleWrapper>
                     </VideoWrapperInline>
                     <VideoWrapperInline>
-                        <TextWrapper>
-                            <p>JASON</p>
-                        </TextWrapper>
                         <video width="640" height="360" controls>
                             <source src ={video2} type="video/mp4" />
                         </video>
-                        <TextWrapper>
-                            <p>Battlefield Sniper</p>
-                        </TextWrapper>
+                        <TitleWrapper>
+                            <p>Jason -&nbsp;</p><p>Battlefield Sniper</p>
+                        </TitleWrapper>
                     </VideoWrapperInline>
                     <VideoWrapperInline>
-                        <TextWrapper>
-                            <p>JASON</p>
-                        </TextWrapper>
                             <video width="640" height="360" controls>
                                 <source src ={video3} type="video/mp4" />
                             </video>
-                        <TextWrapper>
-                            <p>Resident Evil Bomb</p>
-                        </TextWrapper>
+                        <TitleWrapper>
+                            <p>Jason -&nbsp;</p><p>Resident Evil Bomb</p>
+                        </TitleWrapper>
                     </VideoWrapperInline>
                 </VideoWrapper>
 
+                <h1>APEX LEGENDS</h1>
                 <VideoWrapper>
                     <VideoWrapperInline>
-                        <TextWrapper>
-                            <p>JASON</p>
-                        </TextWrapper>
                             <video width="640" height="360" controls>
-                                <source src ={video4} type="video/mp4" />
+                                <source src ={video1} type="video/mp4" />
                             </video>
-                        <TextWrapper>
-                            <p>Valorant Teleporter</p>
-                        </TextWrapper>
+                        <TitleWrapper>
+                            <p>Jason -&nbsp;</p><p>Apex Legends Wipe</p>
+                        </TitleWrapper>
                     </VideoWrapperInline>
                     <VideoWrapperInline>
-                        <TextWrapper>
-                            <p>JASON</p>
-                        </TextWrapper>
                             <video width="640" height="360" controls>
                                 <source src ={video5} type="video/mp4" />
                             </video>
-                        <TextWrapper>
-                            <p>Apex Legends Heirloom</p>
-                        </TextWrapper>
+                        <TitleWrapper>
+                            <p>Jason -&nbsp;</p><p>Apex Legends Heirloom</p>
+                        </TitleWrapper>
                     </VideoWrapperInline>
                 </VideoWrapper>
             </>
