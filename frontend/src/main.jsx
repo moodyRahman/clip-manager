@@ -46,10 +46,6 @@ const router = createBrowserRouter([
 						path: "/confirm",
 						element: <Confirm />,
 					},
-					{
-						path: "/video",
-						element: <VideoPage />,
-					},
 				],
 			},
 			{
@@ -63,6 +59,10 @@ const router = createBrowserRouter([
 					{
 						path: "/upload",
 						element: <UploadPage />,
+					},
+					{
+						path: "/video",
+						element: <VideoPage />,
 					},
 				],
 			},
