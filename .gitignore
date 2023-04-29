@@ -1,3 +1,4 @@
 frontend/.env
 backend/.env
 .terraform/
+node_modules/
