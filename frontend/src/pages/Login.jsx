@@ -24,7 +24,7 @@ const Login = () => {
 		if (res.ok) {
 			const data = await res.json();
 			dispatch(successLogin({ username: username, userID: data.id }));
-			navigate("/");
+			navigate("/video");
 		}
 	};
 

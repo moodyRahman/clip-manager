@@ -53,7 +53,7 @@ const Confirm = () => {
         const data = await res.json()
         if (res.ok) {
             dispatch(successConfirm())
-            navigate("/")
+            navigate("/video")
         }
         else {
             // handle error
