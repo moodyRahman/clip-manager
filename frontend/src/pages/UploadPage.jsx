@@ -17,6 +17,8 @@ function UploadPage(props) {
 		formData.append("title", title);
 		formData.append("description", description);
 		formData.append("userID", userId);
+		formData.append("username", username);
+
 
 		try {
 			const response = await fetch(
@@ -31,7 +33,7 @@ function UploadPage(props) {
 		} catch (err) {
 			console.error(err);
 		}
-		finally{
+		finally {
 			navigate("/video")
 		}
 	};
