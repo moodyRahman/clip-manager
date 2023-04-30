@@ -38,6 +38,8 @@ const Nav = () => {
                     <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
                     <NavElement to="/video">video</NavElement>
                     <NavElement to="/upload">upload</NavElement>
+                    <NavElement to="/myclips">my clips</NavElement>
+
                 </>) :
                     (
                         <>
