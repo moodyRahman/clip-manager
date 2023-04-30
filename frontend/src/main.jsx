@@ -17,6 +17,8 @@ import AuthHome from './pages/AuthHome';
 import HomeSelector from './components/HomeSelector';
 import UnprotectedRoutes from './components/UnprotectedRoutes';
 import SpecificVideo from './pages/SpecificVideo';
+import UploadPage from "./pages/UploadPage"
+import VideoPage from './pages/VideoPage';
 
 const router = createBrowserRouter([
   {
@@ -44,10 +46,6 @@ const router = createBrowserRouter([
             path: "/confirm",
             element: <Confirm />
           },
-          {
-            path: "/specificvideo",
-            element: <SpecificVideo />
-          },
         ]
       },
       {
@@ -57,7 +55,19 @@ const router = createBrowserRouter([
           {
             path: "/auth_test",
             element: <AuthHome />
-          }
+          },
+          {
+            path: "/upload",
+            element: <UploadPage />
+          },
+          {
+            path: "/specificvideo",
+            element: <SpecificVideo />
+          },
+          {
+            path: "/video",
+            element: <VideoPage />,
+          },
         ]
       }
     ]
@@ -66,11 +76,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<PersistGate loading={<>loading</>} persistor={persistor}>
-				<RouterProvider router={router} />
-			</PersistGate>
-		</Provider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <Provider store={store}>
+      <PersistGate loading={<>loading</>} persistor={persistor}>
+        <RouterProvider router={router} />
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>
 );
