@@ -1,10 +1,6 @@
 import React, { Component, useEffect } from 'react';
 import styled from 'styled-components'
-// import video1 from '../assets/apex_wipe.mp4'
-// import video2 from '../assets/bf_livin.mp4'
-// import video3 from '../assets/res_bomb.mp4'
-// import video4 from '../assets/val_tele.mp4'
-// import video5 from '../assets/apex_red.mp4'
+import { useSelector } from "react-redux";
 
 const VideoWrapper = styled.ul`
     display: flex;
@@ -23,11 +19,36 @@ const TitleWrapper = styled.ul`
     justify-content: center;
 `
 
+const DeleteButton = ({ id, title, drill: { clips, setClips } }) => {
 
-const VideoComponent = ({ url, title, description }) => {
+    const userId = useSelector((state) => state.auth.userID);
+    const onClick = (e) => {
+
+        console.log(`${import.meta.env.VITE_BACKEND_URL}/resources/clips/delete/${id}`)
+        console.log({ userID: `${userId}` })
+
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/resources/clips/delete/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userID: `${userId}` })
+        })
+        setClips(clips.filter(x => x.dataValues.id !== id))
+
+    }
+
+    return (
+        <button onClick={onClick} >delete {title}? {id}</button>
+    )
+}
+
+
+const VideoComponent = ({ url, title, description, id, drill }) => {
 
     return (
         <>
+            {id ? <DeleteButton id={id} title={title} drill={drill} /> : <></>}
             <VideoWrapper>
                 <VideoWrapperInline>
                     <video width="640" height="360" src={url} controls>

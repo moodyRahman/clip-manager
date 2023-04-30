@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import VideoComponent from "../components/Video";
 
+// TODO: add delete clip button to this page
+// TODO: deploy with terraform
 
 const MyVideos = () => {
 
@@ -24,8 +26,7 @@ const MyVideos = () => {
     }, [])
 
     return <div>
-        here be your videos
-        {clips.map((v, i) => <VideoComponent key={i} url={v.s3url} title={v.dataValues.title} description={v.dataValues.description} />)}
+        {clips.map((v, i) => <VideoComponent drill={{ setClips, clips }} key={i} url={v.s3url} id={v.dataValues.id} title={v.dataValues.title} description={v.dataValues.description} />)}
     </div>
 }
 

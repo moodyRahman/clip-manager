@@ -109,7 +109,10 @@ router.post(
 	}
 );
 
-router.delete("/delete/:clipid", async (req, res, next) => {
+router.post("/delete/:clipid", async (req, res, next) => {
+
+	console.log(req.body)
+
 	try {
 		const clip = await getClip(db, req.params.clipid);
 		await deleteClip(db, req.params.clipid, req.body.userID);
