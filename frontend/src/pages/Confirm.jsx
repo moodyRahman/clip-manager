@@ -7,7 +7,7 @@ import {
     CognitoUserAttribute,
     CognitoUser
 } from 'amazon-cognito-identity-js';
-import { successConfirm } from "../redux/authStore";
+import { successConfirm, successLogin } from "../redux/authStore";
 import styled from 'styled-components'
 
 const ConfirmWrapper = styled.ul`
@@ -61,7 +61,7 @@ const Confirm = () => {
         const data = await res.json()
         if (res.ok) {
             dispatch(successConfirm())
-            navigate("/video")
+            navigate("/login")
         }
         else {
             // handle error
@@ -97,15 +97,15 @@ const Confirm = () => {
 
     return (
         <>
-        <ConfirmWrapper>
-            You're almost there! Check your email for a verification code and check if you recieved it. <br />
-            DO NOT LEAVE THIS PAGE
-            <input placeholder="verification code" value={code} onChange={handleChange(setCode)} /> <br />
-            <button onClick={handleSubmit} >submit</button> <br /> <br />
-            <button onClick={handleResend} >resend verification</button>
+            <ConfirmWrapper>
+                You're almost there! Check your email for a verification code and check if you recieved it. <br />
+                DO NOT LEAVE THIS PAGE
+                <input placeholder="verification code" value={code} onChange={handleChange(setCode)} /> <br />
+                <button onClick={handleSubmit} >submit</button> <br /> <br />
+                <button onClick={handleResend} >resend verification</button>
 
 
-        </ConfirmWrapper>
+            </ConfirmWrapper>
         </>
     )
 }

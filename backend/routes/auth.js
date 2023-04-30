@@ -119,6 +119,7 @@ router.post(
 				});
 			} else {
 				// createUser(db, username, "", )
+				console.log(result)
 				res.status(202);
 				return res.send({ status: "confirmed" });
 			}
