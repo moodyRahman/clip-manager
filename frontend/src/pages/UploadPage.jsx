@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 function UploadPage(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	const [uploading, setUploading] = useState(false)
 	const userId = useSelector((state) => state.auth.userID);
 	const username = useSelector((state) => state.auth.username);
 
@@ -26,6 +28,7 @@ function UploadPage(props) {
 
 
 		try {
+			setUploading(true)
 			const response = await fetch(
 				`${import.meta.env.VITE_BACKEND_URL}/resources/clips/upload`,
 				{
@@ -52,28 +55,50 @@ function UploadPage(props) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<label htmlFor="title">Title:</label>
-			<input
-				type="text"
-				id="title"
-				name="title"
-				value={title}
-				onChange={handleTitleChange}
-			/>
+		<div>
 
-			<label htmlFor="description">Description:</label>
-			<textarea
-				id="description"
-				name="description"
-				value={description}
-				onChange={handleDescriptionChange}
-			></textarea>
 
-			<input type="file" name="fileInput" />
-			<button type="submit">Upload</button>
-		</form>
+			<form onSubmit={handleSubmit}>
+				<label htmlFor="title">Title:</label>
+				<input
+					type="text"
+					id="title"
+					name="title"
+					value={title}
+					onChange={handleTitleChange}
+				/>
+
+				<label htmlFor="description">Description:</label>
+				<textarea
+					id="description"
+					name="description"
+					value={description}
+					onChange={handleDescriptionChange}
+				></textarea>
+
+				<input type="file" name="fileInput" />
+				<button type="submit">Upload</button>
+			</form>
+			{uploading ? <UploadingIndicator /> : <></>}
+		</div>
 	);
 }
+
+
+const UploadingIndicator = () => {
+
+	const [counter, setCounter] = useState(0)
+
+	useEffect(() => {
+		setTimeout(() => {
+			setCounter((counter + 1) % 4)
+		}, 1000)
+	}, [counter])
+
+	return <div>
+		uploading{".".repeat(counter)}
+	</div>
+}
+
 
 export default UploadPage;
