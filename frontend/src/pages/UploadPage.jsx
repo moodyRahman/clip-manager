@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -6,8 +6,13 @@ function UploadPage(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const userId = useSelector((state) => state.auth.userID);
+	const username = useSelector((state) => state.auth.username);
 
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		console.log(userId)
+	})
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
