@@ -14,7 +14,8 @@ import {
 } from "../../utils/modelsUtil.js";
 
 const router = express.Router();
-
+const bucketName = process.env.BUCKET_NAME;
+const s3 = new AWS.S3();
 
 router.get("/:userid", async (req, res, next) => {
     try {
@@ -28,7 +29,20 @@ router.get("/:userid", async (req, res, next) => {
 router.get("/:userid/clips", async (req, res, next) => {
     try {
         const clips = await getUserOwnedClips(db, req.params.userid);
-        res.json(clips);
+
+
+        const signedClips = await Promise.all(
+            clips.map(async (clip) => {
+                const url = await s3.getSignedUrlPromise("getObject", {
+                    Bucket: bucketName,
+                    Key: clip.s3url.split("/").slice(-1)[0],
+                    Expires: parseInt(process.env.S3_URL_EXPIRATION),
+                });
+                return { ...clip, s3url: url };
+            })
+        );
+
+        res.json(signedClips);
     } catch (err) {
         next(err);
     }
