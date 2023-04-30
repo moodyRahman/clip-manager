@@ -1,3 +1,4 @@
+import VideoComponent from "../components/Video";
 import VideoPlayer from "../components/VideoPlayer";
 import { useEffect, useState } from "react";
 
@@ -10,8 +11,8 @@ const VideoPage = () => {
 				`${import.meta.env.VITE_BACKEND_URL}/resources/clips/get`
 			);
 			const data = await response.json();
-			const urls = data.map((clip) => clip.s3url); // Extract s3url property from each clip object
-			setVideoUrls(urls);
+			console.log(data)
+			setVideoUrls(data);
 		} catch (err) {
 			console.error(err);
 		}
@@ -24,7 +25,10 @@ const VideoPage = () => {
 	return (
 		<div>
 			<h1>All Videos</h1>
-			<VideoPlayer videoUrls={videoUrls} />
+			{videoUrls.map((v, i) =>
+				<VideoComponent key={i} url={v.s3url} title={v.title} description={v.description} />
+			)}
+			{/* <VideoPlayer videoUrls={videoUrls} /> */}
 		</div>
 	);
 };
