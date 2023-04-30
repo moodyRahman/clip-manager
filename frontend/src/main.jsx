@@ -19,6 +19,7 @@ import UnprotectedRoutes from './components/UnprotectedRoutes';
 import SpecificVideo from './pages/SpecificVideo';
 import UploadPage from "./pages/UploadPage"
 import VideoPage from './pages/VideoPage';
+import MyVideos from './pages/MyVideos';
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
           {
             path: "/video",
             element: <VideoPage />,
+          },
+          {
+            path: "/myclips",
+            element: <MyVideos />,
           },
         ]
       }
