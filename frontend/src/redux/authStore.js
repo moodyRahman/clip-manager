@@ -17,7 +17,6 @@ export const authSlice = createSlice({
         },
         successConfirm: (state, action) => {
             state.confirmed = true
-            state.isLoggedIn = true
             state.verification = "verified"
         },
         successLogin: (state, action) => {
