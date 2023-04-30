@@ -31,12 +31,13 @@ const Nav = () => {
 
     const nav = verification !== "in progress" ?
         <>
-            <NavElement to="/">Home</NavElement>
-            <NavElement to="/specificvideo">SpecificVideo</NavElement>
-            <SearchBar>Search...</SearchBar>
             {
                 loggedin ? (<>
+                    <NavElement to="/">Home</NavElement>
+                    <SearchBar>Search...</SearchBar>
                     <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
+                    <NavElement to="/video">video</NavElement>
+                    <NavElement to="/upload">upload</NavElement>
                 </>) :
                     (
                         <>
