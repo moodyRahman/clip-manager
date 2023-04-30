@@ -4,12 +4,9 @@ import VideoComponent from "./Video"
 
 const HomeSelector = () => {
     const loggedin = useSelector((state) => state.auth.isLoggedIn)
-    return loggedin ? <AuthHome /> : 
-    <>
-    <div className="video-component">
-        <VideoComponent>Title</VideoComponent>
-    </div>
-    </>
+    return loggedin ? <AuthHome /> :
+        <>
+        </>
 }
 
 export default HomeSelector

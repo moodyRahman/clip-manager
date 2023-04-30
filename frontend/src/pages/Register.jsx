@@ -16,11 +16,20 @@ const Register = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
+    const [message, setMessage] = useState("")
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleSubmit = async () => {
+
+
+        if (password.length < 9) {
+            setMessage("password too short, 9 characters + 1 caps + special character required")
+            return;
+        }
+
+
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, {
             method: 'POST',
             headers: {
@@ -43,12 +52,13 @@ const Register = () => {
 
     return (
         <>
-        <RegWrapper>
-            <input onChange={handleChange(setEmail)} type="text" placeholder="email" value={email} />
-            <input onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
-            <input onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
-            <button onClick={handleSubmit}>signup</button>
-        </RegWrapper>
+            <RegWrapper>
+                <input onChange={handleChange(setEmail)} type="text" placeholder="email" value={email} />
+                <input onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
+                <input onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
+                <button onClick={handleSubmit}>signup</button>
+                {message}
+            </RegWrapper>
         </>
     )
 }
