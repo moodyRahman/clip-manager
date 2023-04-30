@@ -77,8 +77,9 @@ router.post(
 	"/upload",
 	upload.single("file"),
 	async (req, res, next) => {
+		console.log("starting the upload process")
 		const userInfo = await db.User.findOne({
-			where: { cognitoID: req.body.userID },
+			where: { username: req.body.username },
 		});
 		if (userInfo == null) {
 			return res.status(404).send("User not found");
@@ -91,7 +92,7 @@ router.post(
 				Body: req.file.buffer,
 			};
 			const result = await s3.upload(params).promise();
-
+			console.log(result.Location)
 			// Create clip in database
 			await createClip(
 				db,
@@ -137,5 +138,26 @@ router.delete("/delete/:clipid", async (req, res, next) => {
 		next(err);
 	}
 });
+
+
+router.delete("/user/delete", async (req, res, next) => {
+	const deleteUser = async (models, username) => {
+		const user = await models.User.findOne({
+			where: { username: username },
+		});
+		if (!user) {
+			throw new Error("User not found");
+		}
+		await user.destroy();
+	};
+
+	const { username } = req.body
+
+	await deleteUser(db, username);
+
+	res.send("done")
+
+
+})
 
 export { router as clipsModule };
