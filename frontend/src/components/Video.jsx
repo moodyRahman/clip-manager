@@ -26,10 +26,6 @@ const TitleWrapper = styled.ul`
 
 const VideoComponent = ({ url, title, description }) => {
 
-    useEffect(() => {
-        console.log(url, title, description)
-    })
-
     return (
         <>
             <VideoWrapper>
