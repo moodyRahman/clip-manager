@@ -88,7 +88,7 @@ router.post(
 		try {
 			const params = {
 				Bucket: bucketName,
-				Key: req.file.originalname,
+				Key: (Math.random() + 1).toString(36).substring(5) + "." + req.file.originalname.split('.').pop(),
 				Body: req.file.buffer,
 			};
 			const result = await s3.upload(params).promise();
