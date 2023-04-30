@@ -109,24 +109,6 @@ router.post(
 	}
 );
 
-router.get("/user/:userid", async (req, res, next) => {
-	try {
-		const user = await getUser(db, req.params.userid);
-		res.json(user);
-	} catch (err) {
-		next(err);
-	}
-});
-
-router.get("/user/:userid/clips", async (req, res, next) => {
-	try {
-		const clips = await getUserOwnedClips(db, req.params.userid);
-		res.json(clips);
-	} catch (err) {
-		next(err);
-	}
-});
-
 router.delete("/delete/:clipid", async (req, res, next) => {
 	try {
 		const clip = await getClip(db, req.params.clipid);
@@ -139,25 +121,5 @@ router.delete("/delete/:clipid", async (req, res, next) => {
 	}
 });
 
-
-router.delete("/user/delete", async (req, res, next) => {
-	const deleteUser = async (models, username) => {
-		const user = await models.User.findOne({
-			where: { username: username },
-		});
-		if (!user) {
-			throw new Error("User not found");
-		}
-		await user.destroy();
-	};
-
-	const { username } = req.body
-
-	await deleteUser(db, username);
-
-	res.send("done")
-
-
-})
 
 export { router as clipsModule };
