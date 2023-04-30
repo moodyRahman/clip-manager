@@ -8,6 +8,14 @@ import {
     CognitoUser
 } from 'amazon-cognito-identity-js';
 import { successConfirm } from "../redux/authStore";
+import styled from 'styled-components'
+
+const ConfirmWrapper = styled.ul`
+    display: flex;
+    flex-direction: column;
+    margin-right: 30%;
+    margin-left: 30%;
+`
 
 const Confirm = () => {
 
@@ -89,14 +97,15 @@ const Confirm = () => {
 
     return (
         <>
-            you're almost there! check your email for a verification code and check if you recieved it. <br />
+        <ConfirmWrapper>
+            You're almost there! Check your email for a verification code and check if you recieved it. <br />
             DO NOT LEAVE THIS PAGE
             <input placeholder="verification code" value={code} onChange={handleChange(setCode)} /> <br />
             <button onClick={handleSubmit} >submit</button> <br /> <br />
             <button onClick={handleResend} >resend verification</button>
 
 
-
+        </ConfirmWrapper>
         </>
     )
 }
