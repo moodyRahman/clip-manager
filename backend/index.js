@@ -18,7 +18,7 @@ app.use(cors());
 
 
 morgan.token("keys", function (req, res) {
-	if (req.method === "POST") {
+	if (req.method === "POST" || req.method === "DELETE") {
 		return Object.keys(req.body);
 	}
 	return "";
