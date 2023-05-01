@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Inp } from "./Login";
 
+const Section = styled.div`
+margin-top: 25px;
+`
+
 function UploadPage(props) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -54,10 +58,6 @@ function UploadPage(props) {
 	const handleDescriptionChange = (e) => {
 		setDescription(e.target.value);
 	};
-
-	const Section = styled.div`
-		margin-top: 25px;
-	`
 
 	return (
 		<div>

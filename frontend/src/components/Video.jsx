@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { useSelector } from "react-redux";
 
@@ -22,24 +22,32 @@ const TitleWrapper = styled.ul`
 const DeleteButton = ({ id, title, drill: { clips, setClips } }) => {
 
     const userId = useSelector((state) => state.auth.userID);
+    const [areYouSure, setSure] = useState(false)
     const onClick = (e) => {
+        if (!areYouSure) {
+            setSure(true)
+            return
+        }
 
-        console.log(`${import.meta.env.VITE_BACKEND_URL}/resources/clips/delete/${id}`)
-        console.log({ userID: `${userId}` })
+        if (areYouSure) {
+            console.log(`${import.meta.env.VITE_BACKEND_URL}/resources/clips/delete/${id}`)
+            console.log({ userID: `${userId}` })
 
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/resources/clips/delete/${id}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userID: `${userId}` })
-        })
-        setClips(clips.filter(x => x.dataValues.id !== id))
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/resources/clips/delete/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userID: `${userId}` })
+            })
+            setSure(false)
+            setClips(clips.filter(x => x.dataValues.id !== id))
+        }
 
     }
 
     return (
-        <button onClick={onClick} >delete {title}? {id}</button>
+        <button onClick={onClick} > {areYouSure ? <>are you sure?</> : <>delete the clip "{title}"?</>} </button>
     )
 }
 

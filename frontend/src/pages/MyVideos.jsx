@@ -26,7 +26,14 @@ const MyVideos = () => {
     }, [])
 
     return <div>
-        {clips.map((v, i) => <VideoComponent drill={{ setClips, clips }} key={i} url={v.s3url} id={v.dataValues.id} title={v.dataValues.title} description={v.dataValues.description} />)}
+        {clips.map((v, i) =>
+            <VideoComponent
+                drill={{ setClips, clips }}
+                key={i}
+                url={v.s3url}
+                id={v.dataValues.id}
+                title={v.dataValues.title}
+                description={v.dataValues.description} />)}
     </div>
 }
 
