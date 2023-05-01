@@ -19,6 +19,16 @@ const TitleWrapper = styled.ul`
     justify-content: center;
 `
 
+const Container = styled.div`
+    background: #32323d;
+    margin-bottom: 25px;
+    margin-top: 10px;
+    margin-left: 15px;
+    padding: 15px 25px 25px;
+    width: 30%;
+
+`
+
 const DeleteButton = ({ id, title, drill: { clips, setClips } }) => {
 
     const userId = useSelector((state) => state.auth.userID);
@@ -47,7 +57,7 @@ const DeleteButton = ({ id, title, drill: { clips, setClips } }) => {
     }
 
     return (
-        <button onClick={onClick} > {areYouSure ? <>are you sure?</> : <>delete the clip "{title}"?</>} </button>
+        <button onClick={onClick} > {areYouSure ? <>are you sure?</> : <>delete</>} </button>
     )
 }
 
@@ -55,18 +65,21 @@ const DeleteButton = ({ id, title, drill: { clips, setClips } }) => {
 const VideoComponent = ({ url, title, description, id, drill }) => {
 
     return (
-        <>
-            {id ? <DeleteButton id={id} title={title} drill={drill} /> : <></>}
-            <VideoWrapper>
+        <Container>
+            <div>
+                {id ? <DeleteButton id={id} title={title} drill={drill} /> : <></>}
+                <p>{title} | {description}</p>
+                <video width="100%" src={url} controls>
+                </video>
+                {/* <TitleWrapper> */}
+                {/* </TitleWrapper> */}
+            </div>
+            {/* <VideoWrapper>
                 <VideoWrapperInline>
-                    <video width="640" height="360" src={url} controls>
-                    </video>
-                    <TitleWrapper>
-                        <p>{title} -&nbsp;</p><p>{description}</p>
-                    </TitleWrapper>
+
                 </VideoWrapperInline>
-            </VideoWrapper>
-        </>
+            </VideoWrapper> */}
+        </Container>
     );
 }
 
