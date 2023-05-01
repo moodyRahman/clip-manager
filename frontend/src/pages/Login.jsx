@@ -13,6 +13,13 @@ const LogWrapper = styled.ul`
 
 const Inp = styled.input`
     padding: 12px 20px;
+    background-color: #1a1a1a;
+    color:white;
+`
+
+const Button = styled.button`
+    background-color: #1a1a1a;
+    color: white;
 `
 
 const Login = () => {
@@ -55,7 +62,7 @@ const Login = () => {
             <LogWrapper>
                 <Inp onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
                 <Inp onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
-                <button onClick={handleSubmit}>submit</button>
+                <Button onClick={handleSubmit}>submit</Button>
                 {message}
             </LogWrapper>
         </>
@@ -64,4 +71,4 @@ const Login = () => {
 
 export default Login
 
-export { Inp }
+export { Inp, Button }

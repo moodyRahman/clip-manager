@@ -80,7 +80,9 @@ function UploadPage(props) {
 				<Section>
 					<textarea
 						style={{
-							padding: "12px 20px"
+							padding: "12px 20px",
+							background: "#1a1a1a",
+							color: "white"
 						}}
 						id="description"
 						name="description"

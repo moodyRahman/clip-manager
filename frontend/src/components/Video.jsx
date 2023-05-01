@@ -57,7 +57,7 @@ const DeleteButton = ({ id, title, drill: { clips, setClips } }) => {
     }
 
     return (
-        <button onClick={onClick} > {areYouSure ? <>are you sure?</> : <>delete</>} </button>
+        <button style={{ background: "#1a1a1a", color: "white" }} onClick={onClick} > {areYouSure ? <>are you sure?</> : <>delete</>} </button>
     )
 }
 

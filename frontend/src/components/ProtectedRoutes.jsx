@@ -9,7 +9,8 @@ const ProtectedRoutes = () => {
 
     return (
         isLoggedin ?
-            <Outlet /> :
+
+            <div style={{ color: "white" }}><Outlet /> </div> :
             <Navigate to="/signup" replace />
     )
 

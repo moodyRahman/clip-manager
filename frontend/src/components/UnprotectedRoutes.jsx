@@ -10,7 +10,9 @@ const UnprotectedRoutes = () => {
     return (
         isLoggedin ?
             <Navigate to="/" replace /> :
-            <Outlet />
+            <div style={{ color: "white" }}>
+                <Outlet />
+            </div>
     )
 
 
