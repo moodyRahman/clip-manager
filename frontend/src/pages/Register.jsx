@@ -30,6 +30,24 @@ const Register = () => {
             return;
         }
 
+        if (!/[A-Z]/.test(password)) {
+            setMessage("password too short, 9 characters + 1 caps + special character required");
+            return;
+        }
+
+        const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+        if (!format.test(password)) {
+            setMessage("password too short, 9 characters + 1 caps + special character required");
+            return;
+        }
+
+        setMessage("")
+
+
+
+
+
 
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, {
             method: 'POST',
