@@ -34,11 +34,10 @@ const Nav = () => {
             {
                 loggedin ? (<>
                     <NavElement to="/">Home</NavElement>
-                    <SearchBar>Search...</SearchBar>
-                    <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
-                    <NavElement to="/video">video</NavElement>
-                    <NavElement to="/upload">upload</NavElement>
+                    <NavElement to="/video">all clips</NavElement>
                     <NavElement to="/myclips">my clips</NavElement>
+                    <NavElement to="/upload">upload</NavElement>
+                    <NavElement onClick={() => { dispatch(logout()) }} >sign out</NavElement>
 
                 </>) :
                     (
