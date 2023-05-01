@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Inp } from "./Login";
 
 function UploadPage(props) {
 	const [title, setTitle] = useState("");
@@ -54,30 +55,46 @@ function UploadPage(props) {
 		setDescription(e.target.value);
 	};
 
+	const Section = styled.div`
+		margin-top: 25px;
+	`
+
 	return (
 		<div>
 
 
 			<form onSubmit={handleSubmit}>
-				<label htmlFor="title">Title:</label>
-				<input
-					type="text"
-					id="title"
-					name="title"
-					value={title}
-					onChange={handleTitleChange}
-				/>
+				<Section>
 
-				<label htmlFor="description">Description:</label>
-				<textarea
-					id="description"
-					name="description"
-					value={description}
-					onChange={handleDescriptionChange}
-				></textarea>
+					{/* <label htmlFor="title">Title:</label> */}
+					<Inp
+						type="text"
+						id="title"
+						name="title"
+						value={title}
+						placeholder="title"
+						onChange={handleTitleChange}
+					/>
 
-				<input type="file" name="fileInput" />
-				<button type="submit">Upload</button>
+				</Section>
+				<Section>
+					<textarea
+						style={{
+							padding: "12px 20px"
+						}}
+						id="description"
+						name="description"
+						value={description}
+						placeholder="description"
+						onChange={handleDescriptionChange}
+					></textarea>
+
+				</Section>
+				<Section>
+
+					<input type="file" name="fileInput" />
+					<button type="submit">Upload</button>
+				</Section>
 			</form>
 			{uploading ? <UploadingIndicator /> : <></>}
 		</div>
