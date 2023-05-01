@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"
 import { handleChange } from "../utils";
 import styled from 'styled-components'
+import { Inp } from "./Login";
 
 const RegWrapper = styled.ul`
     display: flex;
@@ -53,9 +54,9 @@ const Register = () => {
     return (
         <>
             <RegWrapper>
-                <input onChange={handleChange(setEmail)} type="text" placeholder="email" value={email} />
-                <input onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
-                <input onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
+                <Inp onChange={handleChange(setEmail)} type="text" placeholder="email" value={email} />
+                <Inp onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
+                <Inp onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
                 <button onClick={handleSubmit}>signup</button>
                 {message}
             </RegWrapper>

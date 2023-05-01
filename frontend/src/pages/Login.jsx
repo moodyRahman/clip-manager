@@ -11,10 +11,15 @@ const LogWrapper = styled.ul`
     margin-left: 30%;
 `
 
+const Inp = styled.input`
+    padding: 12px 20px;
+`
+
 const Login = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("")
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -34,6 +39,8 @@ const Login = () => {
             const data = await res.json();
             dispatch(successLogin({ username: username, userID: data.id }));
             navigate("/video");
+        } else {
+            setMessage("incorrect credentials")
         }
     };
 
@@ -46,12 +53,15 @@ const Login = () => {
     return (
         <>
             <LogWrapper>
-                <input onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
-                <input onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
+                <Inp onChange={handleChange(setUsername)} type="text" placeholder="username" value={username} />
+                <Inp onChange={handleChange(setPassword)} type="password" placeholder="password" value={password} />
                 <button onClick={handleSubmit}>submit</button>
+                {message}
             </LogWrapper>
         </>
     )
 }
 
 export default Login
+
+export { Inp }
