@@ -10,7 +10,9 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
-
+html * :not(input) :not(button) {
+  color: white;
+}
 a {
   font-weight: 500;
   color: #646cff;
