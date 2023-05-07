@@ -2,3 +2,6 @@ frontend/.env
 backend/.env
 .terraform/
 node_modules/
+backend/copilot
+backend/.backend.env
+frontend/.frontend.env
